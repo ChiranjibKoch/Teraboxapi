@@ -98,7 +98,23 @@ Get download information for a TeraBox file.
   "success": true,
   "surl": "1xxxxxxx",
   "original_url": "https://terabox.com/s/1xxxxxxx",
-  "message": "File information extracted successfully"
+  "files": [
+    {
+      "filename": "example_video.mp4",
+      "size": 123456789,
+      "fs_id": "123456",
+      "path": "/example_video.mp4",
+      "isdir": 0,
+      "category": 1,
+      "download_link": "https://...",
+      "thumbnail": "https://..."
+    }
+  ],
+  "share_info": {
+    "shareid": "12345",
+    "uk": "67890"
+  },
+  "message": "Successfully extracted 1 file(s)"
 }
 ```
 
@@ -237,6 +253,8 @@ The API supports the following TeraBox URL formats:
 - `https://www.teraboxapp.com/...`
 - `https://1024terabox.com/...`
 - `https://4funbox.com/...`
+- `https://terasharefile.com/...`
+- `https://www.terasharefile.com/...`
 
 ## Error Handling
 
