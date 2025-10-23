@@ -4,21 +4,28 @@ Test script to demonstrate TeraBox file download link extraction
 This script tests the new functionality with the provided URL.
 
 Usage:
-    python test_download.py
+    python test_download.py [--api-url http://localhost:5000]
+    python test_download.py  # Uses http://localhost:5000 or TERABOX_API_URL env var
 """
 
 import requests
 import json
 import sys
+import argparse
+import os
 
-def test_terabox_download():
+# Constants
+DEFAULT_API_URL = "http://localhost:5000"
+URL_TRUNCATE_LENGTH = 60
+
+def test_terabox_download(base_url):
     """Test the TeraBox API with the provided URL"""
     
     # URL from the problem statement
     test_url = "https://terasharefile.com/s/1Bu86w3Ap-s5O6nsa2PRWQQ"
     
-    # API endpoint (use environment-specific URL)
-    api_url = "http://localhost:5000/api/download"
+    # API endpoint
+    api_url = f"{base_url}/api/download"
     
     print("=" * 70)
     print("TeraBox File Download Link Extraction Test")
@@ -31,7 +38,7 @@ def test_terabox_download():
     print("\n1. Validating URL...")
     try:
         response = requests.post(
-            "http://localhost:5000/api/validate",
+            f"{base_url}/api/validate",
             json={"url": test_url},
             headers={"Content-Type": "application/json"},
             timeout=10
@@ -74,9 +81,9 @@ def test_terabox_download():
                     print(f"    - Size: {file_item.get('size', 0):,} bytes")
                     print(f"    - Path: {file_item.get('path', 'N/A')}")
                     if file_item.get('download_link'):
-                        print(f"    - Download Link: {file_item['download_link'][:60]}...")
+                        print(f"    - Download Link: {file_item['download_link'][:URL_TRUNCATE_LENGTH]}...")
                     if file_item.get('thumbnail'):
-                        print(f"    - Thumbnail: {file_item['thumbnail'][:60]}...")
+                        print(f"    - Thumbnail: {file_item['thumbnail'][:URL_TRUNCATE_LENGTH]}...")
             
             # Display share info
             share_info = result.get('share_info', {})
@@ -97,5 +104,19 @@ def test_terabox_download():
     
     print("\n" + "=" * 70)
 
+def main():
+    """Main function with argument parsing"""
+    parser = argparse.ArgumentParser(
+        description='Test TeraBox API file download link extraction'
+    )
+    parser.add_argument(
+        '--api-url',
+        default=os.environ.get('TERABOX_API_URL', DEFAULT_API_URL),
+        help=f'Base URL of the TeraBox API (default: {DEFAULT_API_URL} or TERABOX_API_URL env var)'
+    )
+    args = parser.parse_args()
+    
+    test_terabox_download(args.api_url)
+
 if __name__ == "__main__":
-    test_terabox_download()
+    main()
