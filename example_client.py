@@ -2,11 +2,18 @@
 """
 Example client for TeraBox API
 This script demonstrates how to use the TeraBox API endpoints.
+
+Usage:
+    python example_client.py                          # Uses http://localhost:5000
+    python example_client.py --url https://api.url    # Uses specified URL
+    export TERABOX_API_URL=https://api.url && python example_client.py
 """
 
 import requests
 import json
 import sys
+import argparse
+import os
 
 
 class TeraBoxAPIClient:
@@ -85,11 +92,23 @@ class TeraBoxAPIClient:
 def main():
     """Main function to demonstrate API usage"""
     
-    # Initialize client (change URL for production)
-    client = TeraBoxAPIClient("http://localhost:5000")
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(
+        description='Example client for TeraBox API'
+    )
+    parser.add_argument(
+        '--url',
+        default=os.environ.get('TERABOX_API_URL', 'http://localhost:5000'),
+        help='Base URL of the TeraBox API (default: http://localhost:5000 or TERABOX_API_URL env var)'
+    )
+    args = parser.parse_args()
+    
+    # Initialize client
+    client = TeraBoxAPIClient(args.url)
     
     print("=" * 60)
     print("TeraBox API Client Example")
+    print(f"API URL: {args.url}")
     print("=" * 60)
     
     # Get API info

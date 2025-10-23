@@ -226,11 +226,16 @@ Follow the instructions to configure DNS settings.
 
 ## Cost
 
-- **Free Tier**: 550-1000 dyno hours per month (with credit card verification)
-- **Hobby**: $7/month per dyno
-- **Professional**: Starting at $25/month per dyno
+**Note**: Heroku discontinued the free tier in November 2022. Current pricing starts from paid plans.
 
-For more pricing information, visit: https://www.heroku.com/pricing
+For the most up-to-date pricing information, please visit the official Heroku pricing page: https://www.heroku.com/pricing
+
+Common plans include:
+- **Basic**: Starting at $5/month
+- **Standard**: Starting at $25/month
+- **Performance**: Starting at $250/month
+
+Pricing and features may change, so always verify current costs on the official Heroku website.
 
 ## Additional Resources
 
